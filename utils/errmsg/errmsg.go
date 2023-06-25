@@ -17,7 +17,7 @@ const (
 	// code= 3000... 分类模块的错误
 )
 
-var codemsg = map[int]string{
+var codeMsg = map[int]string{
 	SUCCESS: "ok",
 	ERROR:   "fail",
 
@@ -31,5 +31,5 @@ var codemsg = map[int]string{
 }
 
 func GetErrMsg(code int) string {
-	return codemsg[code]
+	return codeMsg[code]
 }
