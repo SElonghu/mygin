@@ -8,8 +8,8 @@ import (
 
 type User struct {
 	gorm.Model
-	Username string `gorm:"type:varchar(20);not null" json:"username"`
-	Password string `gorm:"type:varchar(20);not null" json:"password"`
+	Username string `gorm:"type:varchar(20);not null" json:"username" binding:"required"`
+	Password string `gorm:"type:varchar(20);not null" json:"password" binding:"required"`
 	Role     int    `gorm:"type:int" json:"role"`
 }
 
@@ -28,4 +28,13 @@ func CreateUser(data *User) int {
 		return errmsg.ERROR
 	}
 	return errmsg.SUCCESS
+}
+
+func GetUsers(pageSize, pageNum int) []User {
+	var users []User
+	result := db.Limit(pageSize).Offset((pageNum - 1) * pageSize).Find(&users)
+	if result.Error != nil {
+		return nil
+	}
+	return users
 }

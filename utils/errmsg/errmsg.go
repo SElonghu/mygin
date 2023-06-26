@@ -15,6 +15,10 @@ const (
 	// code= 2000... 文章模块的错误
 
 	// code= 3000... 分类模块的错误
+
+	// code = 9000... 通用错误
+	ERROR_QUERY_WRONG    = 9001
+	ERROR_VALIDATE_WRONG = 9002
 )
 
 var codeMsg = map[int]string{
@@ -28,6 +32,8 @@ var codeMsg = map[int]string{
 	ERROR_TOKEN_RUNTIME:    "token已过期",
 	ERROR_TOKEN_WRONG:      "token不正确",
 	ERROR_TOKEN_TYPE_WRONG: "token格式错误",
+	ERROR_QUERY_WRONG:      "获取请求参数错误",
+	ERROR_VALIDATE_WRONG:   "参数验证失败 ",
 }
 
 func GetErrMsg(code int) string {
