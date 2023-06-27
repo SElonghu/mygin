@@ -42,6 +42,28 @@ func GetUsers(pageSize, pageNum int) []User {
 	}
 	return users
 }
+
+func DeleteUser(id int) int {
+	var user User
+	result := db.Where("id = ?", id).Delete(&user)
+	if result.Error != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCESS
+}
+
+func UpdateUser(id int, data *User) int {
+	var user User
+	maps := make(map[string]interface{})
+	maps["username"] = data.Username
+	maps["role"] = data.Role
+	result := db.Model(&user).Where("id = ?", id).Updates(maps)
+	if result.Error != nil {
+		return errmsg.ERROR
+	}
+	return errmsg.SUCCESS
+}
+
 func CryptPW(password string) string {
 	salt := []byte{14, 54, 32, 8, 31, 6, 9, 25}
 	dk, err := scrypt.Key([]byte(password), salt, 16384, 8, 1, 10)
