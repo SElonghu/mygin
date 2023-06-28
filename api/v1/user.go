@@ -63,7 +63,21 @@ func GetUsers(c *gin.Context) {
 
 //编辑用户
 func EditUser(c *gin.Context) {
-
+	var user model.User
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := c.ShouldBindJSON(&user)
+	if err != nil {
+		code = errmsg.ERROR_QUERY_WRONG
+	} else {
+		code = model.CheckUpUser(id, user.Username)
+		if code == errmsg.SUCCESS {
+			code = model.UpdateUser(id, &user)
+		}
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"status":  code,
+		"message": errmsg.GetErrMsg(code),
+	})
 }
 
 //删除用户
